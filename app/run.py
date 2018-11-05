@@ -48,6 +48,11 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+    # TODO: Below is an other example - modify to extract data for your own visuals
+    cat_freq = df[df.columns[4:]].sum() / len(df) 
+    cat_names = list(df.columns[4:])
+
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -69,8 +74,103 @@ def index():
                     'title': "Genre"
                 }
             }
+        },
+
+        # Below is a horizontal frequency barplot of selected variabels
+        {
+            'data': [
+                Bar(
+                    y=['related', 'aid_related', 'infrastructure_related', 'weather_related', 'request', 'offer', 'direct_report'],
+                    x=cat_freq[['related', 'aid_related', 'infrastructure_related', 'weather_related', 'request', 'offer', 'direct_report']],
+                    orientation = 'h'
+                )
+            ],
+
+            'layout': {
+                'title': 'Frequency of Selected Categories<br>(label skewness)',
+                'subtitle': 'Frequency of Categories (positive label skewness)',
+                'yaxis': {
+                    'title': "Category"
+                },
+                'xaxis': {
+                    'title': "Percentage(positive labels)"
+                }
+            }
+        },
+        
+        # Below is a horizontal frequency barplot of weather_related variabels
+        {
+            'data': [
+                Bar(
+                    y=['weather_related', 'floods', 'storm', 'fire', 'earthquake', 'cold', 'other_weather'],
+                    x=cat_freq[['weather_related', 'floods', 'storm', 'fire', 'earthquake', 'cold', 'other_weather']],
+                    orientation = 'h'
+                )
+            ],
+
+            'layout': {
+                'title': 'Frequency of Weather Related Categories<br>(label skewness)',
+                'subtitle': 'Frequency of Categories (positive label skewness)',
+                'yaxis': {
+                    'title': "Category"
+                },
+                'xaxis': {
+                    'title': "Percentage(positive labels)"
+                }
+            }
+        },
+        
+        # Below is a horizontal frequency barplot of infrastructure_related variabels
+        {
+            'data': [
+                Bar(
+                    y=['infrastructure_related', 'transport', 'buildings', 'electricity',
+                       'tools', 'hospitals', 'shops', 'aid_centers', 'other_infrastructure'],
+                    x=cat_freq[['infrastructure_related', 'transport', 'buildings', 'electricity',
+                                'tools', 'hospitals', 'shops', 'aid_centers', 'other_infrastructure']],
+                    orientation = 'h'
+                )
+            ],
+
+            'layout': {
+                'title': 'Frequency of Infrastructure Related Categories<br>(label skewness)',
+                'subtitle': 'Frequency of Categories (positive label skewness)',
+                'yaxis': {
+                    'title': "Category"
+                },
+                'xaxis': {
+                    'title': "Percentage(positive labels)"
+                }
+            }
+        },
+        
+        # Below is a horizontal frequency barplot of aid_related variabels
+        {
+            'data': [
+                Bar(
+                    y=['aid_related', 'medical_help', 'medical_products', 'search_and_rescue',
+                       'security', 'military', 'child_alone', 'water', 'food', 'shelter',
+                       'clothing', 'money', 'missing_people', 'refugees', 'death', 'other_aid'],
+                    x=cat_freq[['aid_related', 'medical_help', 'medical_products', 'search_and_rescue',
+                                'security', 'military', 'child_alone', 'water', 'food', 'shelter',
+                                'clothing', 'money', 'missing_people', 'refugees', 'death', 'other_aid']],
+                    orientation = 'h'
+                )
+            ],
+
+            'layout': {
+                'title': 'Frequency of Aid Related Categories<br>(label skewness)',
+                'subtitle': 'Frequency of Categories (positive label skewness)',
+                'yaxis': {
+                    'title': "Category"
+                },
+                'xaxis': {
+                    'title': "Percentage(positive labels)"
+                }
+            }
         }
     ]
+
     
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
